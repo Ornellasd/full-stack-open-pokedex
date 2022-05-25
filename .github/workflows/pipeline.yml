@@ -16,45 +16,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: npm install
-        run: npm install
-      - name: lint
-        run: npm run eslint
-      - name: build
-        run: npm run build
-      - name: test
-        run: npm run test 
-      - name: Cypress.io
-        uses: cypress-io/github-action@v2
-        with:
-          command: npm run test:e2e
-          start: npm run start-prod
-          wait-on: http://localhost:5000
-      - name: Deploy to Heroku
+      - name: debug conditional
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        uses: akhileshns/heroku-deploy@v3.12.12
-        if: |
-          ${{ github.event_name == 'push' }} &&
-          contains(env.COMMIT_MESSAGES, '#skip') == false
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ornellasd-pokedex"
-          heroku_email: "ornellasdcoding@gmail.com"
-          healthcheck: "https://ornellasd-pokedex.herokuapp.com/health"
-          checkstring: "ok"
-          rollbackonhealthcheckfailed: true
-  tag_release:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    steps: 
-      - uses: actions/checkout@v3
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.36.0
         if: |
             ${{ github.event_name == 'push' }} &&
             contains(env.COMMIT_MESSAGES, '#skip') == false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "skip test"
