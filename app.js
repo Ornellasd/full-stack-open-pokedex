@@ -9,7 +9,7 @@ app.get('/health', (req, res) => {
 })
 
 app.get('/version', (req, res) => {
-  res.send('0.02f')
+  res.send('0.02fg')
 })
 
 app.use(express.static('dist'))
