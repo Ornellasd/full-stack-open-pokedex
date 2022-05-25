@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: debug conditional
+      - name: debug conditional v0
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         if: |
