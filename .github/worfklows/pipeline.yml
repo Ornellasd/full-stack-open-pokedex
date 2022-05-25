@@ -22,5 +22,8 @@ jobs:
       - name: test
         run: npm run test 
       - name: Cypress.io
-        uses: cypress-io/github-action@v2.9.7
-        run: ls -l
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:5000
