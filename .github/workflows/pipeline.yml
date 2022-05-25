@@ -21,5 +21,5 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         if: |
             ${{ github.event_name == 'push' }}
-              && !contains(env.COMMIT_MESSAGES, '#skip') == false
+              && !contains(env.COMMIT_MESSAGES, '#skip')
         run: echo "$COMMIT_MESSAGES"
