@@ -22,4 +22,4 @@ jobs:
         if: |
             ${{ github.event_name == 'push' }} &&
             contains(env.COMMIT_MESSAGES, '#skip') == false
-        run: echo "skip testt"
+        run: echo "$COMMIT_MESSAGES"
