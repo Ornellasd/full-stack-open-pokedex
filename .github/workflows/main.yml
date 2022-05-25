@@ -1,0 +1,14 @@
+name: uploading2?
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  say_cheese_job:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Say cheeseeee
+        run: |
+          echo "cheesee"
