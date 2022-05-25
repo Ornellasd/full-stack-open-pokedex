@@ -34,3 +34,5 @@ jobs:
           heroku_app_name: "ornellasd-pokedex"
           heroku_email: "ornellasdcoding@gmail.com"
           healthcheck: "https://ornellasd-pokedex.herokuapp.com/health"
+          checkstring: "ok"
+          rollbackonhealthcheckfailed: true
