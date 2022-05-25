@@ -19,7 +19,7 @@ jobs:
       - name: test echo commmit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        if: contains(env.COMMIT_MESSAGES, '#skip')
+        if: contains(env.COMMIT_MESSAGES, '#skip') == false
         run: echo "commit message skip workinggg"
       - name: npm install
         run: npm install
