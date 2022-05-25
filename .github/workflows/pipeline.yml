@@ -16,9 +16,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: debug conditional v0
+      - name: debug conditional
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         if: |
-            !contains(env.COMMIT_MESSAGES, '#skip')
+          github.event_name == 'push'
         run: echo "$COMMIT_MESSAGES"
