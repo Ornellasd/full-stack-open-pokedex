@@ -20,5 +20,5 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         if: |
-          contains(env.COMMIT_MESSAGES, '#skip') == false
+            contains(env.COMMIT_MESSAGES, '#skip') == false
         run: echo "skip testt"
