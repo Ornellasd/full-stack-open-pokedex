@@ -19,8 +19,7 @@ jobs:
       - name: test echo commmit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: contains(${{ toJson(github.event.commits.*.message) }}, "#skip")
-
+        run: contains(env.COMMIT_MESSAGES, "#skip")
       - name: npm install
         run: npm install
       - name: lint
