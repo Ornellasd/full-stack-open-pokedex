@@ -16,11 +16,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: test echo commmit messages
-        env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        if: contains(env.COMMIT_MESSAGES, '#skip') == false
-        run: echo "commit message skip included workinggg, purposefully fail"
       - name: npm install
         run: npm install
       - name: lint
@@ -38,6 +33,7 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         if: ${{ github.event_name == 'push' }}
+        if: contains(env.COMMIT_MESSAGES, '#skip') == false
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "ornellasd-pokedex"
@@ -53,6 +49,7 @@ jobs:
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
         if: ${{ github.event_name == 'push' }}
+        if: contains(env.COMMIT_MESSAGES, '#skip') == false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
