@@ -20,6 +20,7 @@ jobs:
       - name: build
         run: npm run build
       - name: test
-        run: npm run test
-      - name: test2
         run: npm run test 
+      - name: Cypress.io
+        uses: cypress-io/github-action@v2.9.7
+        run: ls -l
