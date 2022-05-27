@@ -70,12 +70,5 @@ jobs:
           description:
           details: New version deployed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Discord Webhook - Build Failure
-        needs: [simple_deployment_pipeline]
-        if: failure()
-        with:
-          severity: error
-          description:
-          details: Build failed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
 
