@@ -70,16 +70,3 @@ jobs:
           description:
           details: New version deployed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-  discord_webhook_notify_build_failure:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: rjstone/discord-webhook-notify@v1
-      - name: Discord Webhook - Build Failure
-        if: failure()
-        with:
-          severity: error
-          description:
-          details: Build failed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
