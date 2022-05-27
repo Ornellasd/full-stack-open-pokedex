@@ -58,15 +58,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-  discord_webhook_notify:
-    needs: [simple_deployment_pipeline]
+  discord_webhook_notify_successful_new_version:
+    needs: [tag_release]
     runs-on: ubuntu-20.04
     steps:
-      - name: Discord Webhook Deployment Success
-        uses: rjstone/discord-webhook-notify@v1
+      - uses: rjstone/discord-webhook-notify@v1
+      - name: Discord Webhook - Successful New Version Deployed
         if: success()
         with:
           severity: info
-          details: Test Succeeded!
+          description:
+          details: New version deployed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Discord Webhook Deployment Success
+  discord_webhook_notify_successful_new_version:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1
+      - name: Discord Webhook - Build Failure
+        if: failure()
+        with:
+          severity: error
+          description:
+          details: Build failed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
