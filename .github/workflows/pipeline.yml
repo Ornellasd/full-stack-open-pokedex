@@ -33,6 +33,7 @@ jobs:
       - name: Deploy to Heroku
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        uses: akhileshns/heroku-deploy@v3.12.12
         if: |
           github.event_name == 'push'
             && !contains(env.COMMIT_MESSAGES, '#skip')
@@ -57,4 +58,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+  discord_webhook_notify:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Discord Webhook Deployment Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: Test Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
