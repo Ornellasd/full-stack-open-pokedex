@@ -71,7 +71,7 @@ jobs:
           details: New version deployed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord Webhook Deployment Success
-  discord_webhook_notify_successful_new_version:
+  discord_webhook_notify_build_failure:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
     steps:
