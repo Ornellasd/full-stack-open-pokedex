@@ -33,10 +33,10 @@ jobs:
       - name: Deploy to Heroku
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        uses: akhileshns/heroku-deploy@v3.12.12
         if: |
           github.event_name == 'push'
             && !contains(env.COMMIT_MESSAGES, '#skip')
+            && success()
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "ornellasd-pokedex"
@@ -58,3 +58,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+  discord_webhook_notify:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: rjstone/discord-webhook-notify@v1.0.4
+      - name: Discord Webhook Deployment Success
+        if: success()
+        with:
+          severity: info
+          details: Test Suceeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
